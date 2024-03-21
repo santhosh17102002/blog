@@ -48,3 +48,29 @@ Content-Type: application/json
     "username":"vikas",
     "password":"vikas"
 }
+
+###add article by author
+
+post http://localhost:4000/author-api/article
+Content-Type : application/json
+
+{
+    "articleId":"{{$timestamp}}",
+    "title":"JavaScript basics",
+    "category":"programming",
+    "content":"asdf ;lkjasdf ;lkjfjslkjfjl",
+    "dateOfCreation":"{{$datetime iso8601}}",
+    "dateOfModification":"{{$datetime iso8601}}",
+    "username":"vikas",
+    "comments":[ ],
+    "status":true
+}
+
+###read own articles by author
+get http://localhost:4000/author-api/articles/vikas
+
+###soft delete
+put http://localhost:4000/author-api/articles/vikas/1711001114
+
+###get all articles by users
+get http://localhost:4000/user-api/articles

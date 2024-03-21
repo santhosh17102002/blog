@@ -14,9 +14,9 @@ mongoClient.connect(dbUrl)
     const dbObj= client.db('pvpblogdb')
     const usersCollection = dbObj.collection('users')   
     const authorCollection = dbObj.collection('authors')
-    const adminCollection = dbObj.collection('admin')
+    const articleCollection = dbObj.collection('article')
     app.set('usersCollection',usersCollection);
-    app.set('adminCollection',adminCollection);
+    app.set('articleCollection',articleCollection);
     app.set('authorCollection',authorCollection)
     console.log("DB connection successful")
 })

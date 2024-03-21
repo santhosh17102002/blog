@@ -4,8 +4,10 @@ const bcryptjs = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 
 let authorCollection;
+let articleCollection;
 authorApp.use((req,res,next)=>{
     authorCollection = req.app.get('authorCollection')
+    articleCollection = req.app.get('articleCollection')
     next()
 })
 
@@ -53,8 +55,30 @@ authorApp.post('/login',async(req,res)=>{
         //returns true or false
     }
 })
+
+
 //add article
+authorApp.post('/article',async(req,res)=>{
+    const newArticle = req.body;
+    await articleCollection.insertOne(newArticle)
+    res.send({message:"new article added"})
+})
+authorApp.get('/articles/:username',async(req,res)=>{
+    let authorUsername = req.params.username;
+    //get article of current author
+    let articleList = await articleCollection.find({username:authorUsername}).toArray()
+    res.send({message:"articles",payload:articleList})
+})
 //delete or restore article
+authorApp.put('/articles/:username/:articleId',async(req,res)=>{
+    let articleIdOfUrl = req.params.articleId;
+    let removedArticle = await articleCollection.findOneAndUpdate(
+        {articleId:articleIdOfUrl},
+        {$set:{status:false}},
+        {returnDocument:"after"}
+    );
+    res.send({message:"article removed",payload:removedArticle})
+})
 //read articles
 
 
