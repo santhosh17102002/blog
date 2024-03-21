@@ -1,0 +1,50 @@
+###get user
+get http://localhost:4000/user-api/test-user
+
+###get author
+get http://localhost:4000/author-api/test-author
+
+###get admin
+get http://localhost:4000/admin-api/test-admin
+
+###author registration 
+post http://localhost:4000/author-api/register
+Content-Type: application/json
+
+{
+    "role":"author",
+    "username":"vikas",
+    "password":"vikas",
+    "email":"vikas@gmail.com"
+}
+
+###user registration
+post http://localhost:4000/user-api/register
+Content-Type: application/json
+
+{
+    "role":"user",
+    "username":"vikas",
+    "password":"vikas",
+    "email":"vikas@gmail.com"
+}
+
+###userlogin
+post http://localhost:4000/user-api/login
+Content-Type: application/json
+
+{
+    "role":"user",
+    "username":"vikas",
+    "password":"vikas"
+}
+
+###authorlogin 
+post http://localhost:4000/author-api/login
+Content-Type: application/json
+
+{
+    "role":"author",
+    "username":"vikas",
+    "password":"vikas"
+}
