@@ -36,6 +36,30 @@ function LoginProvider({ children }) {
         });
       }
     }
+    if (credObj.role === "author") {
+      let res = await axios.post(
+        "http://localhost:4000/author-api/login",
+        credObj
+      );
+
+      console.log(res);
+      if (res.data.message === "login success") {
+        //navigate to user profile
+        console.log("author logged in");
+        setCurrentUserDetails({
+          ...currentUserDetails,
+          currentUser: res.data.author,
+          userLoginStatus: true,
+        });
+      } else {
+        setCurrentUserDetails({
+          ...currentUserDetails,
+          err: res.data.message,
+          userLoginStatus: false,
+          currentUser: {},
+        });
+      }
+    }
   }
 
   return (

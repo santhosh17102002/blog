@@ -16,8 +16,16 @@ function Signin() {
   }
 
   useEffect(()=>{
-    if(currentUserDetails.userLoginStatus===true){
-      navigate('/user-profile')
+    if(currentUserDetails.currentUser.role ==='user'){
+      if(currentUserDetails.userLoginStatus===true){
+        navigate("/user-profile")
+      }
+    }
+    
+    if(currentUserDetails.currentUser.role ==='author'){
+      if(currentUserDetails.userLoginStatus===true){
+        navigate("/author-profile")
+      }
     }
   },[currentUserDetails.userLoginStatus])
 
