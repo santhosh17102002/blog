@@ -1,0 +1,28 @@
+//all states were used in return statement using {}
+example 
+import './App.css' 
+function App(){
+  //state
+  let username = 'Santhosh'
+  let person = {
+    name:"ravi",
+    age:20
+  }
+  //function
+  return(
+    <div>
+      <h1>Welcome to react</h1>
+      <p>{username}</p>
+      <p>{person.name}</p>
+      <p>{person.age}</p>
+    </div>
+  );
+}
+export default App;
+-------------------------------------------------------------------------------------------
+out of all looping elements like for ,while,forof only map returns 
+
+
+useEffect hook is useful to make sure that until rendering is done ,their components or code return cant be used
+
+strictMode checks everything twice

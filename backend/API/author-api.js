@@ -1,7 +1,8 @@
 const exp = require('express')
 const authorApp = exp.Router()
 const bcryptjs = require('bcryptjs')
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
+const verifyToken = require('../Middlewares/verifyToken');
 
 let authorCollection;
 let articleCollection;
@@ -58,28 +59,54 @@ authorApp.post('/login',async(req,res)=>{
 
 
 //add article
-authorApp.post('/article',async(req,res)=>{
+authorApp.post('/article',verifyToken,async(req,res)=>{
     const newArticle = req.body;
     await articleCollection.insertOne(newArticle)
     res.send({message:"new article added"})
 })
-authorApp.get('/articles/:username',async(req,res)=>{
+
+//read articles
+
+authorApp.get('/articles/:username',verifyToken,async(req,res)=>{
     let authorUsername = req.params.username;
     //get article of current author
     let articleList = await articleCollection.find({username:authorUsername}).toArray()
     res.send({message:"articles",payload:articleList})
 })
 //delete or restore article
-authorApp.put('/articles/:username/:articleId',async(req,res)=>{
+authorApp.put('/articles/:username/:articleId',verifyToken,async(req,res)=>{
     let articleIdOfUrl = req.params.articleId;
-    let removedArticle = await articleCollection.findOneAndUpdate(
-        {articleId:articleIdOfUrl},
-        {$set:{status:false}},
+    //get status from req
+    let currentStatus = req.body.status;
+    if(currentStatus === true){
+        let removedArticle = await articleCollection.findOneAndUpdate(
+            {articleId:articleIdOfUrl},
+            {$set:{status:currentStatus}},
+            {returnDocument:"after"}
+        );
+        res.send({message:"article removed",payload:removedArticle})
+    }
+    if(currentStatus===false){
+        let removedArticle = await articleCollection.findOneAndUpdate(
+            {articleId:articleIdOfUrl},
+            {$set:{status:currentStatus}},
+            {returnDocument:"after"}
+        );
+        res.send({message:"article removed",payload:removedArticle})
+    }
+
+})
+//edit article
+authorApp.put('/article',verifyToken,async(req,res)=>{
+    let modifiedArticle = req.body;
+    let articleAfterModification = await articleCollection.findOneAndUpdate(
+        {articleId:modifiedArticle.articleId},
+        {$set:{...modifiedArticle}},
         {returnDocument:"after"}
     );
-    res.send({message:"article removed",payload:removedArticle})
+    res.send({message:"article updated",payload:articleAfterModification})
 })
-//read articles
+
 
 
 module.exports = authorApp

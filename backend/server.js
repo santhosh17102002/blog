@@ -4,9 +4,10 @@ const mongoClient = require('mongodb').MongoClient;
 const userApp = require('./API/user-api')
 const authorApp = require('./API/author-api')
 const adminApp = require('./API/admin-api')
+const path = require('path')
 app.use(exp.json())
-
-
+//connect react build with server
+app.use(exp.static(path.join(__dirname,'../frontend/build')))
 
 const dbUrl = 'mongodb://localhost:27017'
 mongoClient.connect(dbUrl)

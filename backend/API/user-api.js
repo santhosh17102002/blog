@@ -1,7 +1,8 @@
 const exp = require('express')
 const userApp = exp.Router()
 const bcryptjs = require('bcryptjs')
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
+const verifyToken = require('../Middlewares/verifyToken');
 
 let userCollection;
 userApp.use((req,res,next)=>{
@@ -41,7 +42,7 @@ userApp.post('/login',async(req,res)=>{
             res.send({message:"Invalid password"})
         }else{
             //create token
-            let signedToken = jwt.sign({username:dbUser.username},'abcdef',{expiresIn:30})
+            let signedToken = jwt.sign({username:dbUser.username},'abcdef',{expiresIn:"2d"})
             //10 => 10 sec
             //"10d" => 10 days
             //"10" =>10 min
@@ -53,13 +54,23 @@ userApp.post('/login',async(req,res)=>{
         //returns true or false
     }
 })
-userApp.get("/articles",async(req,res)=>{
+userApp.get("/articles",verifyToken,async(req,res)=>{
     let articlesList = await articleCollection
     .find({status:true})
     .toArray();
     res.send({message:"articles",payload:articlesList});
 
 });
-
+//add comment by user
+userApp.put('/article/:articleId/comment',verifyToken,async(req,res)=>{
+    let commentObj = req.body;
+    let articleIdOfUrl = req.params.articleId;
+    let articleWithComment = await articleCollection.findOneAndUpdate(
+        {articleId:articleIdOfUrl},
+        {$addToSet:{comments:commentObj}},
+        {returnDocument:"after"}
+    )
+    res.send({message:"comment posted",payload:articleWithComment})
+})
 
 module.exports = userApp

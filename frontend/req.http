@@ -52,6 +52,7 @@ Content-Type: application/json
 ###add article by author
 
 post http://localhost:4000/author-api/article
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InZpa2FzIiwiaWF0IjoxNzExMDE0Mzg1LCJleHAiOjE3MTEwMTQ1MjV9.W5_zhN0iVFkORRRyH0qkuppmX2v0_ArnK6148_vS67o
 Content-Type : application/json
 
 {
@@ -68,9 +69,49 @@ Content-Type : application/json
 
 ###read own articles by author
 get http://localhost:4000/author-api/articles/vikas
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InZpa2FzIiwiaWF0IjoxNzExMDE0Mzg1LCJleHAiOjE3MTEwMTQ1MjV9.W5_zhN0iVFkORRRyH0qkuppmX2v0_ArnK6148_vS67o
+
+
+###read all articles by user
+get http://localhost:4000/user-api/articles
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InZpa2FzIiwiaWF0IjoxNzExMDE0Mzg1LCJleHAiOjE3MTEwMTQ1MjV9.W5_zhN0iVFkORRRyH0qkuppmX2v0_ArnK6148_vS67o
 
 ###soft delete
 put http://localhost:4000/author-api/articles/vikas/1711001114
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InZpa2FzIiwiaWF0IjoxNzExMDE0Mzg1LCJleHAiOjE3MTEwMTQ1MjV9.W5_zhN0iVFkORRRyH0qkuppmX2v0_ArnK6148_vS67o
+Content-Type: application/json
+
+{
+    "status":true
+}
 
 ###get all articles by users
 get http://localhost:4000/user-api/articles
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InZpa2FzIiwiaWF0IjoxNzExMDE0Mzg1LCJleHAiOjE3MTEwMTQ1MjV9.W5_zhN0iVFkORRRyH0qkuppmX2v0_ArnK6148_vS67o
+
+###edit article by author
+put http://localhost:4000/author-api/article
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InZpa2FzIiwiaWF0IjoxNzExMDE0Mzg1LCJleHAiOjE3MTEwMTQ1MjV9.W5_zhN0iVFkORRRyH0qkuppmX2v0_ArnK6148_vS67o
+Content-Type: application/json
+
+{
+    "articleId":"1711002150",
+    "title":"JavaScript basics part2",
+    "category":"programming in js",
+    "content":"asdf ;bkkhkjdddddlkjasdf ;lkjfjslkjfjl fhhsjf",
+    //"dateOfCreation":"2024-03-21T06:05:14.057Z",
+    "dateOfModification":"{{$datetime iso8601}}",
+    "username":"suresh",
+    //"comments":[ ],
+    //"status":true   
+}
+
+###add comment by user
+put http://localhost:4000/user-api/article/1711002150/comment
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InZpa2FzIiwiaWF0IjoxNzExMDE0Mzg1LCJleHAiOjE3MTEwMTQ1MjV9.W5_zhN0iVFkORRRyH0qkuppmX2v0_ArnK6148_vS67o
+Content-Type: application/json
+
+{
+    "username":"suresh",
+    "comment":"villian"
+}
