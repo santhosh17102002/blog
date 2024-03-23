@@ -48,6 +48,7 @@ userApp.post('/login',async(req,res)=>{
             //"10" =>10 min
             //"10w" => 10 weeks
             //send token as response
+            delete dbUser.password;
             res.send({message:"login success",token:signedToken,user:dbUser})
 
         }

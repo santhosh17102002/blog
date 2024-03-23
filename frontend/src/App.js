@@ -5,6 +5,10 @@ import Signup from './components/signup/Signup'
 import Signin from './components/signin/Signin'
 import About from './components/about/About'
 import RootLayout from './RootLayout';
+import UserProfile from './components/user-profile/UserProfile';
+import AuthorProfile from './components/author-profile/AuthorProfile';
+//import userprofile,authorprofile
+
 function App(){
   const browserrouter = createBrowserRouter([
   {
@@ -27,6 +31,15 @@ function App(){
       {
         path:'/about',
         element:<About/>
+      },
+      {
+        path:'/user-profile',
+        element:<UserProfile/>
+
+      },
+      {
+        path:"/author-profile",
+        element:<AuthorProfile/>
       }
     ]
   }
